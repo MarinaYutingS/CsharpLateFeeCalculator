@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment01_c0842810", "Assignment01_c0842810.csproj", "{E8ACF62A-F264-490B-B53F-89914766BDD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lateFeeCalc", "lateFeeCalc.csproj", "{E8ACF62A-F264-490B-B53F-89914766BDD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
