@@ -1,24 +1,21 @@
-﻿namespace Assignment01_c0842810
+﻿namespace Assignment02_c0842810
 {
     partial class frmMainMenu
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        
 
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        /*protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
 
         #region Windows Form Designer generated code
 
@@ -100,7 +97,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImage = global::Assignment01_c0842810.Properties.Resources.back2;
+            this.BackgroundImage = global::Assignment01_c0842810.Properties.Resources.main;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(718, 549);
             this.Controls.Add(this.btnExit);

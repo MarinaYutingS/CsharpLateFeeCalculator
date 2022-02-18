@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Assignment01_c0842810
+namespace Assignment02_c0842810
 {
     public partial class frmMainMenu : Form
     {
@@ -28,14 +28,14 @@ namespace Assignment01_c0842810
         //click NewRelease button to open NewReleases form
         private void btnOpenNewReleases_Click(object sender, EventArgs e)
         {
-            newReleasesCalc.SetupForType(2.00m);//pass late fee to the SetupForType function
+            newReleasesCalc.SetupForType(frmLateFeeCalculator.CalculatorTypesWithFeeInCents.NewReleases);//pass late fee to the SetupForType function
             newReleasesCalc.Show();//show the child window 
         }
 
         //click LibraryMovie button to open LibraryMovies form
         private void btnOpenLibraryMovie_Click(object sender, EventArgs e)
         {
-            libraryMoviesCalc.SetupForType(.57m);//pass late fee to the SetupForType function
+            libraryMoviesCalc.SetupForType(frmLateFeeCalculator.CalculatorTypesWithFeeInCents.LibraryMovies);//pass late fee to the SetupForType function
             libraryMoviesCalc.Show();//show the child window 
             
         }
@@ -43,7 +43,7 @@ namespace Assignment01_c0842810
         //click KidsMovie button to open KidsMovies form
         private void btnOpenKidsMovies_Click(object sender, EventArgs e)
         {
-            kidsMoviesCalc.SetupForType(.15m);//pass late fee to the SetupForType function
+            kidsMoviesCalc.SetupForType(frmLateFeeCalculator.CalculatorTypesWithFeeInCents.KidsMovies);//pass late fee to the SetupForType function
             kidsMoviesCalc.Show();//show the child window 
             
         }
@@ -51,7 +51,7 @@ namespace Assignment01_c0842810
         //click Exit button to exit MainMenu
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

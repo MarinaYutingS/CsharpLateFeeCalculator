@@ -63,9 +63,9 @@ namespace Assignment01_c0842810.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap back1 {
+        internal static System.Drawing.Bitmap calcBack {
             get {
-                object obj = ResourceManager.GetObject("back1", resourceCulture);
+                object obj = ResourceManager.GetObject("calcBack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,19 +73,9 @@ namespace Assignment01_c0842810.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap back2 {
+        internal static System.Drawing.Bitmap main {
             get {
-                object obj = ResourceManager.GetObject("back2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap back3 {
-            get {
-                object obj = ResourceManager.GetObject("back3", resourceCulture);
+                object obj = ResourceManager.GetObject("main", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
