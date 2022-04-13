@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Assignment02_c0842810
+namespace LatefeeCalc_c0842810
 {
     internal static class Program
     {

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RentalItems>
+    <RentalItem>
+        <StockNo>1138</StockNo>
+        <Description>Star Wars</Description>
+        <Rating>PG-13</Rating>
+    </RentalItem>
+    <RentalItem>
+        <StockNo>1139</StockNo>
+        <Description>The Hunger Games</Description>
+        <Rating>PG-10</Rating>
+    </RentalItem>
+    <RentalItem>
+        <StockNo>1140</StockNo>
+        <Description>Catching Fire</Description>
+        <Rating>PG-11</Rating>
+    </RentalItem>
+    <RentalItem>
+        <StockNo>1141</StockNo>
+        <Description>The MockingJay</Description>
+        <Rating>PF-10</Rating>
+    </RentalItem>
+    <RentalItem>
+        <StockNo>1100</StockNo>
+        <Description>Cold Mountain</Description>
+        <Rating>PF-12</Rating>
+    </RentalItem>
+</RentalItems>

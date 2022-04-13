@@ -1,4 +1,4 @@
-﻿namespace Assignment02_c0842810
+﻿namespace LatefeeCalc_c0842810
 {
     partial class frmLateFeeCalculator
     {
@@ -45,10 +45,10 @@
             this.lblMovieNumber = new System.Windows.Forms.Label();
             this.txtCustomerType = new System.Windows.Forms.TextBox();
             this.lblCustomerType = new System.Windows.Forms.Label();
-            this.lblWarning = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.txtTotalNum = new System.Windows.Forms.TextBox();
             this.lblTotalNum = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnReturn
@@ -168,7 +168,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblTitle.Location = new System.Drawing.Point(463, 51);
+            this.lblTitle.Location = new System.Drawing.Point(95, 60);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(224, 44);
@@ -191,10 +191,10 @@
             this.txtMovieNumber.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.txtMovieNumber.Location = new System.Drawing.Point(745, 200);
             this.txtMovieNumber.Name = "txtMovieNumber";
-            this.txtMovieNumber.Size = new System.Drawing.Size(266, 37);
+            this.txtMovieNumber.ReadOnly = true;
+            this.txtMovieNumber.Size = new System.Drawing.Size(158, 37);
             this.txtMovieNumber.TabIndex = 2;
-            this.txtMovieNumber.Text = "1";
-            this.txtMovieNumber.TextChanged += new System.EventHandler(this.txtMovieNumber_TextChanged);
+            this.txtMovieNumber.Text = "0";
             // 
             // lblMovieNumber
             // 
@@ -228,24 +228,9 @@
             this.lblCustomerType.TabIndex = 37;
             this.lblCustomerType.Text = "Customer Type";
             // 
-            // lblWarning
-            // 
-            this.lblWarning.AutoSize = true;
-            this.lblWarning.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblWarning.Font = new System.Drawing.Font("SimSun", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblWarning.ForeColor = System.Drawing.Color.Red;
-            this.lblWarning.Image = global::Assignment01_c0842810.Properties.Resources.calcBack;
-            this.lblWarning.Location = new System.Drawing.Point(669, 113);
-            this.lblWarning.Name = "lblWarning";
-            this.lblWarning.Size = new System.Drawing.Size(387, 24);
-            this.lblWarning.TabIndex = 38;
-            this.lblWarning.Text = "Enter valid number of movies!\r\n";
-            this.lblWarning.Visible = false;
-            // 
             // btnClear
             // 
             this.btnClear.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnClear.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClear.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnClear.Location = new System.Drawing.Point(490, 429);
@@ -262,8 +247,10 @@
             this.txtTotalNum.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.txtTotalNum.Location = new System.Drawing.Point(301, 382);
             this.txtTotalNum.Name = "txtTotalNum";
+            this.txtTotalNum.ReadOnly = true;
             this.txtTotalNum.Size = new System.Drawing.Size(68, 37);
-            this.txtTotalNum.TabIndex = 39;
+            this.txtTotalNum.TabIndex = 9;
+            this.txtTotalNum.TabStop = false;
             // 
             // lblTotalNum
             // 
@@ -272,9 +259,23 @@
             this.lblTotalNum.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblTotalNum.Location = new System.Drawing.Point(98, 382);
             this.lblTotalNum.Name = "lblTotalNum";
-            this.lblTotalNum.Size = new System.Drawing.Size(179, 29);
+            this.lblTotalNum.Size = new System.Drawing.Size(140, 29);
             this.lblTotalNum.TabIndex = 40;
-            this.lblTotalNum.Text = "Total Calculation";
+            this.lblTotalNum.Text = "Total Movies";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnAdd.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAdd.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAdd.Location = new System.Drawing.Point(879, 32);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(150, 107);
+            this.btnAdd.TabIndex = 42;
+            this.btnAdd.Text = "&Select Movies to Return";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // frmLateFeeCalculator
             // 
@@ -282,14 +283,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImage = global::Assignment01_c0842810.Properties.Resources.calcBack;
+            this.BackgroundImage = global::LatefeeCalc_c0842810.Properties.Resources.calcBack;
             this.CancelButton = this.btnReturn;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1104, 549);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtTotalNum);
             this.Controls.Add(this.lblTotalNum);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.lblWarning);
             this.Controls.Add(this.txtCustomerType);
             this.Controls.Add(this.lblCustomerType);
             this.Controls.Add(this.txtMovieNumber);
@@ -333,9 +334,9 @@
         private System.Windows.Forms.Label lblMovieNumber;
         private System.Windows.Forms.TextBox txtCustomerType;
         private System.Windows.Forms.Label lblCustomerType;
-        private System.Windows.Forms.Label lblWarning;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.TextBox txtTotalNum;
         private System.Windows.Forms.Label lblTotalNum;
+        private System.Windows.Forms.Button btnAdd;
     }
 }

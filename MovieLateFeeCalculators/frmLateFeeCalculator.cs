@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Assignment02_c0842810
+namespace LatefeeCalc_c0842810
 {
     public partial class frmLateFeeCalculator : Form
     {
-        //create a public enum
         /// <summary>
         /// WARNING *enum values should be multiplied by 0.01 for final calculation
         /// </summary>
@@ -25,19 +26,34 @@ namespace Assignment02_c0842810
         }
         //declare a type movieLateFeeCalcType
         private CalculatorTypesWithFeeInCents movieLateFeeCalcType;
-        //private CustomerTypeWithBreakInPercent breakType;
 
         //declare a class variable for total number of movies
         private int totalNumberOfMovies;
+        private int totalNumberOfSelectedMovies;
 
+        //static variables
+        public static double totalLateFee;
+        public static double totalLateFeeNR;
+        public static double totalLateFeeLM;
+        public static double totalLateFeeKM;
+        //only check 1 validation per time
+        public static int errorNum = 0;
+
+        /// <summary>
+        /// Initialize the form
+        /// Populate Today`s date and show it in the textbox txtCurrent
+        /// </summary>
         public frmLateFeeCalculator()
         {
             InitializeComponent();
-
-            //populate Today`s date and show it in the textbox txtCurrent
             txtCurrent.Text = DateTime.Now.ToString(@"MM-dd-yyyy");
         }
 
+        /// <summary>
+        /// Initializes the late fee calculate form for a specific type of calculator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmNewReleases_Shown(object sender, EventArgs e)
         {
             SetupFormForType();
@@ -46,6 +62,7 @@ namespace Assignment02_c0842810
 
         /// <summary>
         /// Initializes a form for a specific type of calculator
+        /// Based on different fee conditions, pops up different child windows
         /// </summary>
         private void SetupFormForType()
         {
@@ -57,7 +74,7 @@ namespace Assignment02_c0842810
             }
             decimal currentMovieFee = (int)movieLateFeeCalcType * 0.01m;
 
-            //based on different fee conditions, pops up different child windows
+            
             lblLateFeeNoticeReadOnly.Text = String.Format("At {0:c} / day", currentMovieFee);
 
             switch (movieLateFeeCalcType)
@@ -85,106 +102,131 @@ namespace Assignment02_c0842810
             }
         }
 
-        //created method: SetupForType()
-        //access to the method: public
-        //type of the method: void 
-        //pass a variable(decimal fee) through the function(SetupForType)
+        /// <summary>
+        /// Pass a variable(decimal fee) through the function(SetupForType) in the frmMainMenu
+        /// </summary>
+        /// <param name="type"></param>
         public void SetupForType(CalculatorTypesWithFeeInCents type)
         {
             movieLateFeeCalcType = type;
         }
 
-
+        /// <summary>
+        /// Hide the form window when Return button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            //when click Exit button, hide this form to reveal MainMenu
             Hide();
+            //frmNewMovie.numberOfLateMovies = 0;
+            frmRentalMaintenance.numberOfLateMovies = 0;
+            totalNumberOfSelectedMovies = 0;
+            Clear();
+            DialogResult = DialogResult.Cancel;
         }
 
+        /// <summary>
+        /// Calculate Late Fee for the specific type of movie when Calculate button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            //INPUT VALIDATION:input format
-            if (!CheckUserEnteredData(out int successParseNumOfMovies, 
-                            out DateTime dayDue, out CustomerTypeWithBreakInPercent customerType))
+            CalculateLateFee();
+        }
+
+        /// <summary>
+        /// CalculateLateFee() function
+        /// Try Catch any expections after data validation
+        /// Call Calculation function to calculate the late fee
+        /// Call SetLateFee function to display the late fee and days late
+        /// Move the focus to the Return button
+        /// </summary>
+        private void CalculateLateFee()
+        {
+            try
             {
-                return;
-            };
+                if (CheckUserEnteredValidData(
+                      out int successParseNumOfMovies,
+                      out DateTime dayDue,
+                      out CustomerTypeWithBreakInPercent customerType)
+                  ) {
+                    double lateFee =
+                        Calculation(successParseNumOfMovies, dayDue, customerType,
+                                    out double numberOfDays);
+                    //set total late fee for all mocvies and all calculations
+                    totalLateFee += lateFee;
+                    //set total late fee for all movie types
+                    switch (movieLateFeeCalcType) {
+                        case CalculatorTypesWithFeeInCents.NewReleases:
+                            totalLateFeeNR = lateFee;
+                            break;
+                        case CalculatorTypesWithFeeInCents.LibraryMovies:
+                            totalLateFeeLM = lateFee;
+                            break;
+                        case CalculatorTypesWithFeeInCents.KidsMovies:
+                            totalLateFeeKM = lateFee;
+                            break;
 
-            //Calculate the late fee
-            double lateFee = CalculateLateFee(successParseNumOfMovies, dayDue, customerType,
-                            out double numberOfDays);
 
-            //Display the late fee as curreny in the textbox txtLateFee
-            SetLateFee(numberOfDays, lateFee);
+                    }
 
-            //move the focus to the Return button
-            btnReturn.Focus();
+                    SetLateFee(numberOfDays, lateFee);
+
+                    btnReturn.Focus();
+                } 
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message + "\n\nError of type: " + ex.GetType() + "\n\nStack trace: \n\n" + ex.StackTrace, "Error Encountered");
+            }
+
+            
         }
 
         /// <summary>
         /// Calculate and return late fee
-        /// Display the numbers of clicks on the 'calculate' button
+        /// Display the total number of movies 
         /// </summary>
         /// <param name="successParseNumOfMovies"></param>
         /// <param name="dayDue"></param>
         /// <param name="numberOfDays"></param>
-        /// <returns></returns>
-        private double CalculateLateFee(int successParseNumOfMovies, DateTime dayDue,
+        /// <returns>lateFee</returns>
+        private double Calculation(int successParseNumOfMovies, DateTime dayDue,
                                         CustomerTypeWithBreakInPercent customerType,
                                       out double numberOfDays)
         {
-            //Generate the current date
             DateTime dayCurrent = DateTime.Now;
-            //Calculate the number of days late
+
             TimeSpan dayTotal = dayCurrent.Date - dayDue.Date;
             numberOfDays = dayTotal.TotalDays;
-            //INPUT VALIDATION:duedate time
-            ValidateFutureDates(numberOfDays);
 
             double currentMovieFee = (int)movieLateFeeCalcType * 0.01;
             double currentFeeAfterBreak = 1 - (int)customerType * 0.01;
 
-            //switch statement for the type of calcularors
-            switch (movieLateFeeCalcType)
-            {
-                case CalculatorTypesWithFeeInCents.NewReleases:
-                    //add and show the number of calculated movies
-                    totalNumberOfMovies++;
-                    txtTotalNum.Text = totalNumberOfMovies.ToString();
-                    //calculate late fee total with the returned movie totals
-                    double lateFeeNR = currentMovieFee * numberOfDays * successParseNumOfMovies;
-                    // Apply break based on customer types
-                    lateFeeNR = LateFeeWithBreak(customerType, currentFeeAfterBreak, lateFeeNR);
-                    return lateFeeNR;
+            
+            totalNumberOfMovies += successParseNumOfMovies;
+            txtTotalNum.Text = totalNumberOfMovies.ToString();
 
-                case CalculatorTypesWithFeeInCents.LibraryMovies:
-                    //add and show the number of calculated movies
-                    totalNumberOfMovies++;
-                    txtTotalNum.Text = totalNumberOfMovies.ToString();
-                    //calculate late fee total with the returned movie totals
-                    double lateFeeLM = currentMovieFee * numberOfDays * successParseNumOfMovies;
-                    // Apply break based on customer types
-                    lateFeeLM = LateFeeWithBreak(customerType, currentFeeAfterBreak, lateFeeLM);
-                    return lateFeeLM;
+            double lateFee = currentMovieFee * numberOfDays * successParseNumOfMovies;
 
-                case CalculatorTypesWithFeeInCents.KidsMovies:
-                    //add and show the number of calculated movies
-                    totalNumberOfMovies++;
-                    txtTotalNum.Text = totalNumberOfMovies.ToString();
-                    //calculate late fee total with the returned movie totals
-                    double lateFeeKM = currentMovieFee * numberOfDays * successParseNumOfMovies;
-                    // Apply break based on customer types
-                    lateFeeKM = LateFeeWithBreak(customerType, currentFeeAfterBreak, lateFeeKM);
-                    return lateFeeKM;
+            lateFee = LateFeeWithBreak(customerType, currentFeeAfterBreak, lateFee);
 
-                case CalculatorTypesWithFeeInCents.Unknown:
-                    txtLateFee.Text = "Unknown late fees";
-                    return 0;
-            }
-            return 1;
+            return lateFee;
         }
 
-        private static double LateFeeWithBreak(CustomerTypeWithBreakInPercent customerType, double currentFeeAfterBreak, double lateFee)
+        /// <summary>
+        /// Calculate late fee based on Customer Type
+        /// </summary>
+        /// <param name="customerType"></param>
+        /// <param name="currentFeeAfterBreak"></param>
+        /// <param name="lateFee"></param>
+        /// <returns></returns>
+        private static double LateFeeWithBreak(
+            CustomerTypeWithBreakInPercent customerType, 
+            double currentFeeAfterBreak,
+            double lateFee)
         {
             if (customerType == CustomerTypeWithBreakInPercent.J)
             {
@@ -198,21 +240,6 @@ namespace Assignment02_c0842810
             return lateFee;
         }
 
-        /// <summary>
-        /// Prevent user input of future dates
-        /// </summary>
-        /// <param name="numberOfDays"></param>
-        private void ValidateFutureDates(double numberOfDays)
-        {
-            
-            if (numberOfDays < 0)
-            {
-                txtDueDate.Text = "Due Date not come yet";
-                txtLateDays.Text = "Not Available";
-                txtLateFee.Text = "Not Available";
-                return;
-            }
-        }
 
         /// <summary>
         /// Display the number of late days and late fee
@@ -225,55 +252,63 @@ namespace Assignment02_c0842810
             txtLateFee.Text = lateFee.ToString("c");
         }
 
-        private bool CheckUserEnteredData(out int successParseNumOfMovies, 
-                                out DateTime dayDue, out CustomerTypeWithBreakInPercent customerType)
+        /// <summary>
+        /// IsInt32: check number of movies is a positive integer
+        /// IsCustType: check customer type is N / J / L 
+        /// IsDateTime: check due date is a validate date that has passed the current date
+        /// </summary>
+        /// <param name="successParseNumOfMovies"></param>
+        /// <param name="dayDue"></param>
+        /// <param name="customerType"></param>
+        /// <returns></returns>
+        private bool CheckUserEnteredValidData(
+            out int successParseNumOfMovies, 
+            out DateTime dayDue, 
+            out CustomerTypeWithBreakInPercent customerType)
         {
             bool dataValid = true;
-            //Get the total number of movies
-            
-            if (!Validator.TryParseInt(txtMovieNumber.Text, out successParseNumOfMovies))
-            {
-                txtMovieNumber.Text = "1";
-                dataValid = false;
-            }
-            if (!Validator.TryParseCustomerType(txtCustomerType.Text, out customerType))
-            {
-                txtCustomerType.Text = "N";
-                dataValid = false;
-            }
-            if (!Validator.TryParseDateTime(txtDueDate.Text, out dayDue))
+            //Get and validate the due date
+            if (!Validator.IsDateTime(txtDueDate.Text, out dayDue))
             {
                 txtDueDate.Text = "Invalid Input, try again";
                 txtLateDays.Text = "Not Available";
                 txtLateFee.Text = "Not Available";
                 dataValid = false;
+                errorNum++;
             }
+            //Get and validate the total number of movies
+            if (!Validator.IsInt32(txtMovieNumber.Text, out successParseNumOfMovies))
+            {
+
+                txtMovieNumber.Text = "0";
+                dataValid = false;
+                errorNum++;
+            }
+            
+            //Get and validate the customer type
+            if (!Validator.IsCustType(txtCustomerType.Text, out customerType) )
+            {
+                txtCustomerType.Text = "N";
+                errorNum++;
+            }
+            errorNum = 0;
+            
             return dataValid;
         }
 
 
 
-        //input validation for number of movies
-        private void txtMovieNumber_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Clear all the user entries when Clear button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClear_Click(object sender, EventArgs e)
         {
-            //input validation for empty strings
-            if (string.IsNullOrEmpty(txtMovieNumber.Text))
-            {
-                lblWarning.Show();
-            }
-            else if (Validator.IsValidInteger(txtMovieNumber.Text))
-            {
-                //disable any warnings
-                lblWarning.Hide();
-            }
-            else
-            {
-                //enable the warning
-                lblWarning.Show();
-            }
+            Clear();
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void Clear()
         {
             totalNumberOfMovies = 0;
 
@@ -284,8 +319,16 @@ namespace Assignment02_c0842810
             txtTotalNum.Text = "";
         }
 
-
-
-
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            frmRentalMaintenance frmSelectMovie = new frmRentalMaintenance();
+            DialogResult addBtn = frmSelectMovie.ShowDialog();
+            if (addBtn == DialogResult.OK)
+            {
+                totalNumberOfSelectedMovies += frmRentalMaintenance.numberOfLateMovies;
+                txtMovieNumber.Text = totalNumberOfSelectedMovies.ToString();
+            }
+            DialogResult = DialogResult.None;
+        }
     }
 }

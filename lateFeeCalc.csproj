@@ -6,12 +6,27 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8ACF62A-F264-490B-B53F-89914766BDD7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Assignment01_c0842810</RootNamespace>
-    <AssemblyName>Assignment01_c0842810</AssemblyName>
+    <RootNamespace>LatefeeCalc_c0842810</RootNamespace>
+    <AssemblyName>LatefeeCalc_c0842810</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RentalItemDB.cs" />
+    <Compile Include="frmRentalMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRentalMaintenance.Designer.cs">
+      <DependentUpon>frmRentalMaintenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RentalItem.cs" />
+    <Compile Include="frmNewMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNewMovie.Designer.cs">
+      <DependentUpon>frmNewMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="MovieLateFeeCalculators\frmLateFeeCalculator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +95,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Validator.cs" />
+    <EmbeddedResource Include="frmRentalMaintenance.resx">
+      <DependentUpon>frmRentalMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNewMovie.resx">
+      <DependentUpon>frmNewMovie.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,6 +130,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\calcBack.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

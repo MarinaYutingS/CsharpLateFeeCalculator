@@ -1,4 +1,4 @@
-﻿namespace Assignment02_c0842810
+﻿namespace LatefeeCalc_c0842810
 {
     partial class frmMainMenu
     {
@@ -31,6 +31,10 @@
             this.btnOpenLibraryMovies = new System.Windows.Forms.Button();
             this.btnOpenKidsMovies = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.lblTotalLate = new System.Windows.Forms.Label();
+            this.txtTotalLateMain = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCurrentSum = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblMainMenu
@@ -91,15 +95,63 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // lblTotalLate
+            // 
+            this.lblTotalLate.AutoSize = true;
+            this.lblTotalLate.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalLate.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTotalLate.Location = new System.Drawing.Point(12, 554);
+            this.lblTotalLate.Name = "lblTotalLate";
+            this.lblTotalLate.Size = new System.Drawing.Size(427, 26);
+            this.lblTotalLate.TabIndex = 42;
+            this.lblTotalLate.Text = "Total Late Fee For All Movies and All Calculations\r\n";
+            // 
+            // txtTotalLateMain
+            // 
+            this.txtTotalLateMain.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalLateMain.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.txtTotalLateMain.Location = new System.Drawing.Point(512, 554);
+            this.txtTotalLateMain.Name = "txtTotalLateMain";
+            this.txtTotalLateMain.ReadOnly = true;
+            this.txtTotalLateMain.Size = new System.Drawing.Size(112, 37);
+            this.txtTotalLateMain.TabIndex = 6;
+            this.txtTotalLateMain.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Location = new System.Drawing.Point(12, 490);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(260, 26);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "Total Late Fee For All Movies \r\n";
+            // 
+            // txtCurrentSum
+            // 
+            this.txtCurrentSum.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCurrentSum.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.txtCurrentSum.Location = new System.Drawing.Point(512, 479);
+            this.txtCurrentSum.Name = "txtCurrentSum";
+            this.txtCurrentSum.ReadOnly = true;
+            this.txtCurrentSum.Size = new System.Drawing.Size(112, 37);
+            this.txtCurrentSum.TabIndex = 5;
+            this.txtCurrentSum.TabStop = false;
+            // 
             // frmMainMenu
             // 
             this.AcceptButton = this.btnOpenNewReleases;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImage = global::Assignment01_c0842810.Properties.Resources.main;
+            this.BackgroundImage = global::LatefeeCalc_c0842810.Properties.Resources.main;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(718, 549);
+            this.ClientSize = new System.Drawing.Size(718, 624);
+            this.Controls.Add(this.txtCurrentSum);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtTotalLateMain);
+            this.Controls.Add(this.lblTotalLate);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnOpenKidsMovies);
             this.Controls.Add(this.btnOpenLibraryMovies);
@@ -122,6 +174,10 @@
         private System.Windows.Forms.Button btnOpenLibraryMovies;
         private System.Windows.Forms.Button btnOpenKidsMovies;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Label lblTotalLate;
+        private System.Windows.Forms.TextBox txtTotalLateMain;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtCurrentSum;
     }
 }
 
